@@ -473,8 +473,8 @@ typedef NS_ENUM(NSInteger, ImagePickerClassType) { UIImagePickerClassType, PHPic
 
 - (void)picker:(PHPickerViewController *)picker
     didFinishPicking:(NSArray<PHPickerResult *> *)results API_AVAILABLE(ios(14)) {
-  [picker dismissViewControllerAnimated:YES completion:nil];
   if (results.count == 0) {
+    [picker dismissViewControllerAnimated:YES completion:nil];
     [self sendCallResultWithSavedPathList:nil];
     return;
   }
@@ -494,6 +494,7 @@ typedef NS_ENUM(NSInteger, ImagePickerClassType) { UIImagePickerClassType, PHPic
   // This operation will be executed on the main queue after
   // all selected files have been saved.
   NSBlockOperation *sendListOperation = [NSBlockOperation blockOperationWithBlock:^{
+    [picker dismissViewControllerAnimated:YES completion:nil];
     if (saveError != nil) {
       [weakSelf sendCallResultWithError:saveError];
     } else {
